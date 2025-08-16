@@ -2,7 +2,8 @@ from sqlalchemy import BigInteger, String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase , Mapped , mapped_column
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 
-engine = create_async_engine(url='sqlite+aiosqlite:///db.sqlite3')
+
+engine = create_async_engine(url='postgresql+asyncpg://cco:Rahagatop1@localhost/ref')
 
 async_session = async_sessionmaker(engine)
 
@@ -24,7 +25,7 @@ class Item(Base):
     id: Mapped[int] = mapped_column(primary_key = True)
     name: Mapped[str] = mapped_column(String(25))
     reward: Mapped[str] = mapped_column()
-    desc: Mapped[str] = mapped_column(String(5000))
+    description: Mapped[str] = mapped_column(String(5000))
     category: Mapped[int] = mapped_column(ForeignKey('categories.id'))
 
 async def async_main():

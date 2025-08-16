@@ -65,7 +65,7 @@ async def show_item(callback: CallbackQuery):
     await callback.message.answer(
         f'🎁 {item_data.name}\n\n'
         f'💰 Награда: {item_data.reward}\n\n'
-        f'📝 Описание: {item_data.desc}\n\n'
+        f'📝 Описание: {item_data.description}\n\n'
         'Выберите действие ниже 👇',
         reply_markup=keyboard.adjust(2).as_markup()
     )
