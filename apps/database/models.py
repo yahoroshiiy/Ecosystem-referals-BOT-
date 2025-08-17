@@ -1,6 +1,8 @@
 from sqlalchemy import BigInteger, String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase , Mapped , mapped_column
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
+from datetime import datetime
+from sqlalchemy import DateTime
 
 
 engine = create_async_engine(url='postgresql+asyncpg://cco:Rahagatop1@localhost/ref')
@@ -38,7 +40,11 @@ class SupportTicket(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     message: Mapped[str] = mapped_column(String(1000))
     status: Mapped[str] = mapped_column(String(20), default='open')  # open, answered, closed
-    created_at: Mapped[str] = mapped_column(String(50))  # Можно использовать DateTime, но для простоты String
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, 
+        default=datetime.utcnow,  # Автоматически подставит текущее время при создании
+        nullable=False
+    )
 class BonusTicket(Base):
     __tablename__ = 'bonus_tickets'
     
@@ -46,4 +52,15 @@ class BonusTicket(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     message: Mapped[str] = mapped_column(String(1000))
     status: Mapped[str] = mapped_column(String(20), default='open')  # open, answered, closed
-    created_at: Mapped[str] = mapped_column(String(50))  # Можно использовать DateTime, но для простоты String
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, 
+        default=datetime.utcnow,  # Автоматически подставит текущее время при создании
+        nullable=False
+    )
+class ResponseTickets(Base):
+    __tablename__ = 'response_tickets'
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    message: Mapped[str] = mapped_column(String(1000))
+
