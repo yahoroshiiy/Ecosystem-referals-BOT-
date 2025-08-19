@@ -17,7 +17,6 @@ async def categories():
     for category in all_categories:
         keyboard.add(InlineKeyboardButton(text=category.name, callback_data=f"category_{category.id}"))
     
-    # Добавляем дополнительные кнопки после цикла
     keyboard.row(InlineKeyboardButton(text='Тех поддержка', callback_data='TP_room'))
     keyboard.row(InlineKeyboardButton(text='Дополнительные бонусы', callback_data='dop_bonus'))
 
@@ -32,7 +31,6 @@ async def items(category_id):
     
     keyboard.adjust(2)
     
-    # Добавляем остальные кнопки
     keyboard.row(InlineKeyboardButton(text='Категории', callback_data='back_to_categories'))
     keyboard.row(InlineKeyboardButton(text='Тех поддержка', callback_data='TP_room'))
     keyboard.row(InlineKeyboardButton(text='Дополнительные бонусы', callback_data='dop_bonus'))

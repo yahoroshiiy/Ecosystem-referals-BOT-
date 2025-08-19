@@ -350,7 +350,6 @@ async def answer_ticket_command(message: Message, state: FSMContext, bot: Bot):
 
     try:
         async with async_session() as session:
-            # Проверяем наличие тикета
             support_ticket = await session.scalar(select(SupportTicket).where(SupportTicket.id == ticket_id))
             bonus_ticket = await session.scalar(select(BonusTicket).where(BonusTicket.id == ticket_id))
             
@@ -365,13 +364,11 @@ async def answer_ticket_command(message: Message, state: FSMContext, bot: Bot):
                 await message.answer("❌ Пользователь не найден.")
                 return
 
-            # Сохраняем tg_id до закрытия сессии
             user_tg_id = user.tg_id
             if not user_tg_id:
                 await message.answer("❌ У пользователя отсутствует TG ID.")
                 return
 
-            # Создаём ответ
             response = ResponseTickets(
                 user_id=user.id,
                 message=answer_text
@@ -379,7 +376,6 @@ async def answer_ticket_command(message: Message, state: FSMContext, bot: Bot):
             ticket.status = 'closed'
             session.add(response)
             
-            # Сохраняем в базу
             try:
                 await session.commit()
                 print(f"Успешно сохранён ответ для тикета #{ticket_id}")
@@ -389,7 +385,6 @@ async def answer_ticket_command(message: Message, state: FSMContext, bot: Bot):
                 await message.answer("❌ Ошибка при сохранении ответа в базе.")
                 return
 
-        # Отправляем сообщение пользователю вне сессии
         try:
             print(f"Попытка отправки сообщения пользователю {user_tg_id} для тикета #{ticket_id}")
             await bot.send_message(

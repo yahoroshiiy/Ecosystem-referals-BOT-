@@ -39,10 +39,10 @@ class SupportTicket(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     message: Mapped[str] = mapped_column(String(1000))
-    status: Mapped[str] = mapped_column(String(20), default='open')  # open, answered, closed
+    status: Mapped[str] = mapped_column(String(20), default='open')  
     created_at: Mapped[datetime] = mapped_column(
         DateTime, 
-        default=datetime.utcnow,  # Автоматически подставит текущее время при создании
+        default=datetime.utcnow,  
         nullable=False
     )
 class BonusTicket(Base):
@@ -51,10 +51,10 @@ class BonusTicket(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     message: Mapped[str] = mapped_column(String(1000))
-    status: Mapped[str] = mapped_column(String(20), default='open')  # open, answered, closed
+    status: Mapped[str] = mapped_column(String(20), default='open')  
     created_at: Mapped[datetime] = mapped_column(
         DateTime, 
-        default=datetime.utcnow,  # Автоматически подставит текущее время при создании
+        default=datetime.utcnow,  
         nullable=False
     )
 class ResponseTickets(Base):
